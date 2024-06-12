@@ -1,13 +1,32 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { store } from "./redux/store";
+import { Provider } from "react-redux";
+import "./index.css";
+import { MainHeader } from "./components/main-header";
+import reportWebVitals from "./reportWebVitals";
+import { Home } from "./pages/Home";
+import { SignIn } from "./pages/Sign-in";
+import { User } from "./pages/User";
+import { Footer } from "./components/footer";
+import { Error } from "./pages/Error";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <Router>
+        <MainHeader />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/user" element={<User />} />
+          <Route path="*" element={<Error />} />
+        </Routes>
+        <Footer />
+      </Router>
+    </Provider>
   </React.StrictMode>
 );
 
