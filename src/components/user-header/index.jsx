@@ -1,17 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { changeName } from "../../redux/UserSlice";
+import { UserInformations, changeName } from "../../redux/UserSlice";
 
 export const UserHeader = () => {
   const { user, loading, error } = useSelector((state) => state.user);
   const [modif, setModif] = useState(false);
-  const [newUserName, setNewUserName] = useState("");
-
+  const [newUserName, setNewUserName] = useState(user?.userName || "");
   const dispatch = useDispatch();
+
+  //les dependencies ?
+  useEffect(() => {
+    if (!user) {
+      dispatch(UserInformations());
+    }
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(changeName({ newUserName }));
+    dispatch(changeName(newUserName));
     setModif(false);
   };
 
@@ -32,31 +38,69 @@ export const UserHeader = () => {
     return <div>Error: {error}</div>;
   }
 
+  if (!user) {
+    return <div></div>;
+  }
+
   return (
     <div className="header">
-      <h1>
-        Welcome back
-        <br />
-        {modif ? (
-          <form onSubmit={handleSubmit}>
+      {modif ? (
+        <>
+          <h1>Edit User Info</h1>
+
+          <form onSubmit={handleSubmit} className="form-user">
+            <label htmlFor="username">User Name</label>
             <input
               type="text"
+              name="username"
               value={newUserName}
               onChange={handleUserNameChange}
-              placeholder="Enter new user name"
-              className="header"
+              placeholder="New user name"
+              className="input-user"
             />
-            <button type="submit" className="header">
-              ☑
-            </button>
+            <label htmlFor="fistname">First Name</label>
+            <input
+              name="firstname"
+              type="text"
+              value={user?.firstName}
+              readOnly
+              disabled
+              className="input-user"
+            />
+            <label htmlFor="lastname">Last Name</label>
+            <input
+              name="lastname"
+              type="text"
+              value={user?.lastName}
+              readOnly
+              disabled
+              className="input-user"
+            />
+            <br />
+            <div className="btn-form">
+              <button type="submit" className="edit-button">
+                Save
+              </button>
+              <button className="edit-button" onClick={handleEditClick}>
+                Cancel
+              </button>
+            </div>
           </form>
-        ) : (
-          user.userName
-        )}
-      </h1>
-      <button className="edit-button" onClick={handleEditClick}>
-        Edit Name
-      </button>
+        </>
+      ) : (
+        <>
+          <h1>
+            Welcome Back
+            <br />
+            {user.userName}
+          </h1>
+        </>
+      )}
+      {!modif && (
+        <button className="edit-button" onClick={handleEditClick}>
+          Edit Name
+        </button>
+      )}
     </div>
   );
 };

@@ -34,7 +34,6 @@ export const UserInformations = createAsyncThunk("user/profile", async (_) => {
       config
     );
     const log = response.data.body;
-    console.log(log);
     return log;
   } catch (error) {
     console.log(error);

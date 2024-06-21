@@ -7,7 +7,7 @@ export const SignIn = () => {
   // states locaux
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [saved, setSaved] = useState(false);
   // states redux
   const { loading, error, token } = useSelector((state) => state.user);
 
@@ -16,7 +16,6 @@ export const SignIn = () => {
 
   const handleLoginEvent = (e) => {
     e.preventDefault();
-
     let userCredentials = {
       email,
       password,
@@ -32,11 +31,24 @@ export const SignIn = () => {
     });
   };
 
+  const toggleRemenber = () => {
+    setSaved(!saved);
+  };
+
+  useEffect(() => {
+    if (saved) {
+      localStorage.setItem("save", "true");
+    } else {
+      localStorage.removeItem("save");
+    }
+  }, [saved]);
+
   useEffect(() => {
     if (token) {
       dispatch(UserInformations());
+      navigate("/user");
     }
-  }, [dispatch, token]);
+  }, [dispatch, token, navigate]);
 
   return (
     <div>
@@ -65,7 +77,13 @@ export const SignIn = () => {
             />
           </div>
           <div className="input-remember">
-            <input type="checkbox" id="remember-me" />
+            <input
+              type="checkbox"
+              id="remember-me"
+              name="remember-me"
+              onChange={toggleRemenber}
+              checked={saved}
+            />
             <label htmlFor="remember-me">Remember me</label>
           </div>
           <button type="submit" className="sign-in-button">

@@ -276,6 +276,41 @@ body {
   color: #fff;
 }
 
+.input-user {
+  font-weight: bold;
+  width: 200px;
+  text-align: center;
+}
+.btn-user {
+  font-size: 30px;
+  background: none;
+  cursor: pointer;
+  border: none;
+}
+
+.form-user {
+  display: flex;
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  flex-direction: column;
+  vertical-align: middle;
+}
+
+.btn-form {
+  justify-content: center;
+}
+
+.transactions {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+tbody th {
+  font-weight: 400;
+}
+
 @media (min-width: 720px) {
   .account {
     flex-direction: row;

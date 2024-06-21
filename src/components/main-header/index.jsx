@@ -7,9 +7,14 @@ import { useState, useEffect } from "react";
 export const MainHeader = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // le state global redux
   const { user, loading, error } = useSelector((state) => state.user);
+
+  // mon state local pour stocker la valeur de l'input
   const [firstName, setFirstName] = useState("");
 
+  // ce use effect sert lors du rechargement de la page pour éviter que user = null
   useEffect(() => {
     if (user) {
       setFirstName(user.firstName);
@@ -34,6 +39,7 @@ export const MainHeader = () => {
   const loggedOut = (e) => {
     e.preventDefault();
     localStorage.removeItem("token");
+    localStorage.getItem("save") ?? localStorage.removeItem("save");
     setFirstName("");
     dispatch(Logout());
     navigate("/");
