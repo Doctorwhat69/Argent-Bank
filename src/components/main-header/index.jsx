@@ -8,8 +8,13 @@ export const MainHeader = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const handleHomeClick = (e) => {
+    e.preventDefault();
+    navigate("/");
+  };
+
   // le state global redux
-  const { user, loading, error } = useSelector((state) => state.user);
+  const { user, loading } = useSelector((state) => state.user);
 
   // mon state local pour stocker la valeur de l'input
   const [firstName, setFirstName] = useState("");
@@ -24,22 +29,15 @@ export const MainHeader = () => {
   if (loading) {
     return <div>loading... </div>;
   }
-  if (error) {
-    return <div>error {error} </div>;
-  }
+  
   const handleUserClick = (e) => {
     e.preventDefault();
     navigate("/user");
   };
-  const handleHomeClick = (e) => {
-    e.preventDefault();
-    navigate("/");
-  };
 
   const loggedOut = (e) => {
     e.preventDefault();
-    localStorage.removeItem("token");
-    localStorage.getItem("save") ?? localStorage.removeItem("save");
+    localStorage.removeItem("token") || sessionStorage.getItem("token");
     setFirstName("");
     dispatch(Logout());
     navigate("/");

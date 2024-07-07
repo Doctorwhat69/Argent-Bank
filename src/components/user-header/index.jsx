@@ -13,7 +13,7 @@ export const UserHeader = () => {
     if (!user) {
       dispatch(UserInformations());
     }
-  });
+  }, [dispatch, user]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,7 +35,7 @@ export const UserHeader = () => {
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div>Error</div>;
   }
 
   if (!user) {
@@ -51,6 +51,8 @@ export const UserHeader = () => {
           <form onSubmit={handleSubmit} className="form-user">
             <label htmlFor="username">User Name</label>
             <input
+              id="username"
+              autoComplete="username"
               type="text"
               name="username"
               value={newUserName}
@@ -58,8 +60,9 @@ export const UserHeader = () => {
               placeholder="New user name"
               className="input-user"
             />
-            <label htmlFor="fistname">First Name</label>
+            <label htmlFor="firstname">First Name</label>
             <input
+              id="firstname"
               name="firstname"
               type="text"
               value={user?.firstName}
@@ -69,6 +72,7 @@ export const UserHeader = () => {
             />
             <label htmlFor="lastname">Last Name</label>
             <input
+              id="lastname"
               name="lastname"
               type="text"
               value={user?.lastName}

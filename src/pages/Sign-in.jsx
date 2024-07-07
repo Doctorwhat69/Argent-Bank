@@ -21,28 +21,22 @@ export const SignIn = () => {
       email,
       password,
     };
-    dispatch(loginUser(userCredentials)).then((result) => {
-      if (loginUser.fulfilled.match(result)) {
-        dispatch(UserInformations()).then(() => {
-          setEmail("");
-          setPassword("");
-          navigate("/user");
-        });
+    dispatch(loginUser({ userCredentials, rememberMe: saved })).then(
+      (result) => {
+        if (loginUser.fulfilled.match(result)) {
+          dispatch(UserInformations()).then(() => {
+            setEmail("");
+            setPassword("");
+            navigate("/user");
+          });
+        }
       }
-    });
+    );
   };
 
   const toggleRemenber = () => {
     setSaved(!saved);
   };
-
-  useEffect(() => {
-    if (saved) {
-      localStorage.setItem("save", "true");
-    } else {
-      localStorage.removeItem("save");
-    }
-  }, [saved]);
 
   useEffect(() => {
     if (token) {
@@ -61,6 +55,7 @@ export const SignIn = () => {
             <label htmlFor="username">Username</label>
             <input
               type="text"
+              name="username"
               id="username"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -72,6 +67,7 @@ export const SignIn = () => {
             <input
               type="password"
               id="password"
+              name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               autoComplete="current-password"
@@ -90,7 +86,7 @@ export const SignIn = () => {
           <button type="submit" className="sign-in-button">
             {loading ? "loading..." : "Sign In"}
           </button>
-          {error && <div> {error}</div>}
+          {error && <div>Error: {typeof error === 'string' ? error : error.message}</div>}
         </form>
       </section>
     </div>

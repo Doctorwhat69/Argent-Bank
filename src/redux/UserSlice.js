@@ -7,58 +7,79 @@ export const Logout = createAction("user/logout");
 // Thunk pour POST les informations de connexion et obtenir le token
 export const loginUser = createAsyncThunk(
   "user/loginUser",
-  async (userCredentials) => {
-    const response = await axios.post(
-      "http://localhost:3001/api/v1/user/login",
-      userCredentials
-    );
-    const log = response.data.body;
-    localStorage.setItem("token", log.token);
-    return log;
+  async ({ userCredentials, rememberMe }, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/api/v1/user/login",
+        userCredentials
+      );
+      const log = response.data.body;
+
+      if (rememberMe) {
+        localStorage.setItem("token", log.token);
+      } else {
+        sessionStorage.setItem("token", log.token);
+      }
+
+      return log;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
 );
 
 // Thunk pour récupérer les informations de l'utilisateur
-export const UserInformations = createAsyncThunk("user/profile", async (_) => {
-  const token = localStorage.getItem("token");
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
+export const UserInformations = createAsyncThunk(
+  "user/profile",
+  async (_, { rejectWithValue }) => {
+    const token =
+      localStorage.getItem("token") || sessionStorage.getItem("token");
+      if (!token) {
+        return rejectWithValue('Token not found');
+      }
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
-  try {
-    const response = await axios.post(
-      "http://localhost:3001/api/v1/user/profile",
-      {},
-      config
-    );
-    const log = response.data.body;
-    return log;
-  } catch (error) {
-    console.log(error);
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/api/v1/user/profile",
+        {},
+        config
+      );
+      const log = response.data.body;
+      return log;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
-});
+);
 
 // Thunk pour modifier le nom d'utilisateur
-export const changeName = createAsyncThunk("updateName", async (userName) => {
-  const token = localStorage.getItem("token");
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-  try {
-    const response = await axios.put(
-      "http://localhost:3001/api/v1/user/profile",
-      { userName },
-      config
-    );
-    return response.data.body;
-  } catch (error) {
-    console.log(error);
+export const changeName = createAsyncThunk(
+  "updateName",
+  async (userName, { rejectWithValue }) => {
+    const token =
+      localStorage.getItem("token") || sessionStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      const response = await axios.put(
+        "http://localhost:3001/api/v1/user/profile",
+        { userName },
+        config
+      );
+      return response.data.body;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
-});
+);
 
 // Slice pour gérer les actions et les évolutions du state global
 const userSlice = createSlice({
