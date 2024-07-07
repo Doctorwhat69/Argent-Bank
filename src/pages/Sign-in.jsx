@@ -39,11 +39,15 @@ export const SignIn = () => {
   };
 
   useEffect(() => {
-    if (token) {
+    if (token && !error) {
       dispatch(UserInformations());
       navigate("/user");
     }
-  }, [dispatch, token, navigate]);
+    if (token && error) {
+      navigate("/");
+      localStorage.removeItem("token") || sessionStorage.getItem("token");
+    }
+  }, [dispatch, token, navigate, error]);
 
   return (
     <div>
@@ -86,7 +90,11 @@ export const SignIn = () => {
           <button type="submit" className="sign-in-button">
             {loading ? "loading..." : "Sign In"}
           </button>
-          {error && <div>Error: {typeof error === 'string' ? error : error.message}</div>}
+          {error && (
+            <div>
+              Error: {typeof error === "string" ? error : error.message}
+            </div>
+          )}
         </form>
       </section>
     </div>
