@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/Argent-Bank/static/css/main.acd82045.css",
+    "main.js": "/Argent-Bank/static/js/main.d0b94383.js",
+    "static/js/453.8ab44547.chunk.js": "/Argent-Bank/static/js/453.8ab44547.chunk.js",
+    "static/media/bank-tree.jpeg": "/Argent-Bank/static/media/bank-tree.4d59987c7c62b024b014.jpeg",
+    "static/media/icon-security.png": "/Argent-Bank/static/media/icon-security.1c819fa1007a5c53e6a9.png",
+    "static/media/argentBankLogo.png": "/Argent-Bank/static/media/argentBankLogo.e031a16c76ab9bbbf78a.png",
+    "static/media/icon-chat.png": "/Argent-Bank/static/media/icon-chat.e238539d82b5a5f63c33.png",
+    "static/media/icon-money.png": "/Argent-Bank/static/media/icon-money.8ec88bb1a5070fd6513a.png",
+    "index.html": "/Argent-Bank/index.html",
+    "main.acd82045.css.map": "/Argent-Bank/static/css/main.acd82045.css.map",
+    "main.d0b94383.js.map": "/Argent-Bank/static/js/main.d0b94383.js.map",
+    "453.8ab44547.chunk.js.map": "/Argent-Bank/static/js/453.8ab44547.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.acd82045.css",
+    "static/js/main.d0b94383.js"
+  ]
+}
