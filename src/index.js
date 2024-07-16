@@ -19,9 +19,9 @@ root.render(
       <Router>
         <MainHeader />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/sign-in" element={<SignIn />} />
-          <Route path="/user" element={<User />} />
+          <Route path="/Argent-Bank/" element={<Home />} />
+          <Route path="/Argent-Bank/sign-in" element={<SignIn />} />
+          <Route path="/Argent-Bank/user" element={<User />} />
           <Route path="*" element={<Error />} />
         </Routes>
         <Footer />
