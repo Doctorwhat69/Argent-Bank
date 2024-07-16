@@ -1,6 +1,7 @@
 {
   "name": "frontend",
   "version": "0.1.0",
+  "homepage": "https://doctorwhat69.github.io/Argent-Bank/",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.5",
