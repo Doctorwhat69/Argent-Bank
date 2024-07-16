@@ -29,7 +29,7 @@ export const MainHeader = () => {
   if (loading) {
     return <div>loading... </div>;
   }
-  
+
   const handleUserClick = (e) => {
     e.preventDefault();
     navigate("/user");
@@ -45,7 +45,11 @@ export const MainHeader = () => {
 
   return (
     <nav className="main-nav">
-      <a className="main-nav-logo" href="/" onClick={handleHomeClick}>
+      <a
+        className="main-nav-logo"
+        href="/Argent-Bank/"
+        onClick={handleHomeClick}
+      >
         <img
           className="main-nav-logo-image"
           src={argentBankLogo}
@@ -55,7 +59,11 @@ export const MainHeader = () => {
       </a>
       <div>
         {firstName && (
-          <a className="main-nav-item" href="/user" onClick={handleUserClick}>
+          <a
+            className="main-nav-item"
+            href="/Argent-Bank/user"
+            onClick={handleUserClick}
+          >
             <i className="fa fa-user-circle"></i>
             {firstName}
           </a>
@@ -67,7 +75,7 @@ export const MainHeader = () => {
             Sign Out
           </a>
         ) : (
-          <a className="main-nav-item" href="/sign-in">
+          <a className="main-nav-item" href="/Argent-Bank/sign-in">
             <i className="fa fa-sign-out"></i>
             Sign In
           </a>
